@@ -62,8 +62,8 @@ void Controller::ack_received( const uint64_t sequence_number_acked,
 {
   /* Default: take no action */
   /* AIMD */
-  if ((timestamp_ack_received - send_timestamp_acked) > timeout_ms()) {
-    curWinSize = max(curWinSize * 2 / 3, 1u);
+  if ((timestamp_ack_received - send_timestamp_acked) > 100) {
+    curWinSize = max(curWinSize * 2, 1u);
     packetsUntilIncrease = curWinSize;
     cout << "Decreasing curWinSize to " << curWinSize << endl;
   } else {
@@ -89,5 +89,5 @@ void Controller::ack_received( const uint64_t sequence_number_acked,
    before sending one more datagram */
 unsigned int Controller::timeout_ms( void )
 {
-  return 100; /* timeout of one second */
+  return 1000; /* timeout of one second */
 }
